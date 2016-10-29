@@ -6,6 +6,7 @@ import java.lang.Exception;
 public class compile {
 	public static void main(String[] args) {
 		String code = ""; //THE JGolf code
+		String[]statements;//Contains individual statements in the code
 		String filename = "A"; //The default filename if none present in args
 		if(args.length > 0) filename = args[0]; //get filename (without extension)
 		String verbose = 
@@ -15,7 +16,7 @@ public class compile {
 			+"public class "+filename+" {\n"
 			+"\tpublic static void main(String[]args) {\n"; //default stuff for java
 		String ending =
-			"\t}"
+			"\t}\n"
 			+"}"; //the ending parenthesis
 
 
@@ -31,24 +32,44 @@ public class compile {
 			System.err.println("Exception, failed to reader file: " + e);
 		}
 
+		statements = code.split(";");
+
 		System.out.println("compile.java: Read file "+filename+".jgolf");
 
-		//Replace "P(" with System.out.println(
-		Pattern PprintLine = Pattern.compile("P\\|");//Compiling printLine regex
-		Matcher MprintLine = PprintLine.matcher(code);//getting matcher obj for ^
-		code = MprintLine.replaceAll("System.out.println(\\|");//replacing for ^^
+		//iterator through all the statements
+		for(int i = 0; i < statements.length; i++) {
+			String statement = statements[i];
+			//Replace "P(" with System.out.println(
+			Pattern Pprint = Pattern.compile("([Pp])([\\|\\(])");//Compiling printLine regex
+			Matcher Mprint = Pprint.matcher(statement);//getting matcher obj for ^
+			String javaPrint = "System.out.print";
+			if(Mprint.find()) {
+				if(Mprint.group(1).equals("P")) {//checking if it is P[\(\|] or p[\(\|]
+					javaPrint = "System.out.println";
+				}
+				if(Mprint.group(2).equals("|")) {
+					statement = Mprint.replaceAll(javaPrint + "(|");//replacing for [Pp]|...
+				}else if(Mprint.group(2).equals("(")) {
+					statement = Mprint.replaceAll(javaPrint + "(");//replacing for [Pp](...
+				}
+			}
+			Pattern Pstringify = Pattern.compile("\\|([^\\|]*)\\|");//finding strings in |asdasd| format
+			Matcher Mstringify = Pstringify.matcher(statement);//getting matcher for ^
+			statement = Mstringify.replaceAll("\"$1\")");//replacing for ^^
 
-		Pattern Pstringify = Pattern.compile("\\|([^\\|]*)\\|");//finding strings in |asdasd| format
-		Matcher Mstringify = Pstringify.matcher(code);//getting matcher for ^
-		code = Mstringify.replaceAll("\"$1\")");//replacing for ^^
-		
+			statements[i] = statement;//Adding the changes to statements
+		}
+
 		System.out.println("compile.java: Compiled code");//TODO: added syntax changes
 
 		//write as a java file
 		try {
 			PrintWriter writer = new PrintWriter((filename+".java"), "UTF-8");
 			writer.println(verbose);//clutter
-			writer.println(code);//code, TODO: add syntax changes
+			for(String statement:statements) {//iterates through the statements
+				if(statement!=null) writer.println(statement+";");
+			}
+			//writer.println(code);//code, TODO: add syntax changes
 			writer.println(ending);//ending brackets
 			writer.close();
 		}catch(Exception e) {
