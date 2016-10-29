@@ -19,6 +19,8 @@ Then execute `javac compile.java` to compile it
 Now create a `.jgolf` program and and save it as `filename.jgolf`
 
 Finally, execute `sh jgolf.sh filename` (`filename` is without extensions)
+
+
 **THERE WILL BE DEBUG MESSAGES IN THIS DEVELOPING VERSION OF THE COMPILER**
 
 DONE!
