@@ -16,15 +16,17 @@ Download `compile.java` and `jgolf.sh`
 
 **Note! YOU ARE REQUIRED TO HAVE JAVA ALREADY INSTALLED ON YOUR MACHINE**
 
-Then execute `javac compile.java` to compile it
+Then execute `javac compile.java` to compile the file
 
-Now create a `.jgolf` program and and save it as `filename.jgolf`
+Now create a `.jgolf` program **in the same folder** and and save it as `filename.jgolf`
 
-Finally, execute `sh jgolf.sh filename` (`filename` is without extensions)
+Finally, execute `sh jgolf.sh filename` (`filename` is **without extensions** or otherwise there will be ERRORS!)
 
 **THERE WILL BE DEBUG MESSAGES IN THIS DEVELOPING VERSION OF THE COMPILER**
 
 DONE!
+
+**Note! All the files (`compile.java`, `jgolf.sh` and the jgolf file) have to be in the same directory.**
 
 ###Command-Line Arguments Usage
 

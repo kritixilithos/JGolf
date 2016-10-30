@@ -35,7 +35,7 @@ public class compile {
 			+"\t\tint A = 1;\n"
 			+"\t\tif(a.length > 0) {\n"
 			+"\t\ts = a[0];\n"
-			+"\t\tS = String.join(\"\", a);\n"
+			+"\t\tS = String.join(\" \", a);\n"
 			+"\t\ttry {\n"
 			+"\t\t\tr = Integer.parseInt(a[0]);\n"
 			+"\t\t\tg = a[0].charAt(0);\n"
