@@ -22,15 +22,15 @@ Now create a `.jgolf` program and and save it as `filename.jgolf`
 
 Finally, execute `sh jgolf.sh filename` (`filename` is without extensions)
 
+**THERE WILL BE DEBUG MESSAGES IN THIS DEVELOPING VERSION OF THE COMPILER**
+
+DONE!
+
 ###Command-Line Arguments Usage
 
     sh jgolf.sh filename argument1 argument2 argument3 ...
 
 Where `argument1`, `argument2`, ... are the arguments that are passed as command-line arguments to the JGolf program.
-
-**THERE WILL BE DEBUG MESSAGES IN THIS DEVELOPING VERSION OF THE COMPILER**
-
-DONE!
 
 
 ##But I want to learn the language...
