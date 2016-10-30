@@ -3,6 +3,16 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.lang.Exception;
 
+/**
+	* NOTES: input is accepted through args:
+	*  a = args        A = length(1)
+	*  r = int(0)      R = double(0.0)
+	*  g = char(' ')   G = char array(null)
+	*  s = string("")  S = args as string(" ")
+	*  r,R,G,s are all for args[0] where g is the first character in args[0]
+	*  Parenthesis indicate the default initialised value of the variables
+	*/
+
 public class compile {
 	public static void main(String[] args) {
 		String code = ""; //THE JGolf code
@@ -14,7 +24,27 @@ public class compile {
 			+"import java.lang.*;\n"
 			+"import java.util.*;\n\n"
 			+"public class "+filename+" {\n"
-			+"\tpublic static void main(String[]args) {\n"; //default stuff for java
+			+"\tpublic static void main(String[]a) {\n"; //default stuff for java
+		String argDeclare =
+			"\t\tString s=\"\";\n"
+			+"\t\tString S=\" \";\n"
+			+"\t\tint r=0;\n"
+			+"\t\tchar g=\' \';\n"
+			+"\t\tchar G[] = null;\n"
+			+"\t\tdouble R = 0.0;\n"
+			+"\t\tint A = 1;\n"
+			+"\t\tif(a.length > 0) {\n"
+			+"\t\ts = a[0];\n"
+			+"\t\tS = String.join(\"\", a);\n"
+			+"\t\ttry {\n"
+			+"\t\t\tr = Integer.parseInt(a[0]);\n"
+			+"\t\t\tg = a[0].charAt(0);\n"
+			+"\t\t\tG = a[0].toCharArray();\n"
+			+"\t\t\tR = Double.parseDouble(a[0]);\n"
+			+"\t\t}catch(Exception e){\n"
+			+"\t\t}\n"
+			+"\t\tA = a.length;\n"
+			+"\t\t}\n";//a is args. Default values are listed above
 		String ending =
 			"\t}\n"
 			+"}"; //the ending parenthesis
@@ -66,6 +96,7 @@ public class compile {
 		try {
 			PrintWriter writer = new PrintWriter((filename+".java"), "UTF-8");
 			writer.println(verbose);//clutter
+			writer.println(argDeclare);//arg variables
 			for(String statement:statements) {//iterates through the statements
 				if(statement!=null) writer.println(statement+";");
 			}
