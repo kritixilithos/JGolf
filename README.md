@@ -1,5 +1,7 @@
 # JGolf (open-source esoteric programming language that is basically Java, but golfed)
 
+###LICENSED UNDER MIT
+
 **LANGUAGE UNDER DEVELOPMENT**
 
 This is an esoteric programming language I am trying out (after failing with Carrot because I eventually gave up after being lost in the messy source code).
@@ -24,3 +26,7 @@ Finally, execute `sh jgolf.sh filename` (`filename` is without extensions)
 **THERE WILL BE DEBUG MESSAGES IN THIS DEVELOPING VERSION OF THE COMPILER**
 
 DONE!
+
+##But I want to learn the language...
+
+All right, no worries, that is why I have created this [wiki](https://github.com/kritixilithos/JGolf/wiki) to help you learn the language.
