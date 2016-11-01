@@ -90,7 +90,7 @@ public class compile {
 			statements[i] = statement;//Adding the changes to statements
 		}
 
-		System.out.println("compile.java: Compiled JGolf code to Java");//TODO: added syntax changes
+		System.out.println("compile.java: Transpiled JGolf code to Java");//TODO: added syntax changes
 
 		//write as a java file
 		try {
