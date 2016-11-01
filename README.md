@@ -12,6 +12,8 @@ I started developing this on 2016/10/29. But I honestly don't know how long will
 
 #Getting Started
 
+LONG, DETAILED VERSION is at the [wiki](https://github.com/kritixilithos/JGolf/wiki/Running-Your-First-Program-(with-ALL-technical-details)).
+
 Download `compile.java` and `jgolf.sh`
 
 **Note! YOU ARE REQUIRED TO HAVE JAVA ALREADY INSTALLED ON YOUR MACHINE**
