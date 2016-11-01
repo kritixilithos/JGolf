@@ -1,6 +1,6 @@
 #!/bin/bash
 
-FILENAME=${1%\.*}         #EXTRACT FILE NAME WITHOUT EXTENSION
+FILENAME=$1               #EXTRACT FILE NAME WITHOUT EXTENSION
 java compile $FILENAME    #COMPILE JGOLF TO JAVA
 echo "jgolf.sh: Finshed converting code to Java"
 FILENAME="$FILENAME.java" #ADD JAVA EXTENSION
