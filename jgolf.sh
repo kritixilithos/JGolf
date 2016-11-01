@@ -6,7 +6,7 @@ echo "jgolf.sh: Finshed converting code to Java"
 FILENAME="$FILENAME.java" #ADD JAVA EXTENSION
 javac $FILENAME           #COMPILE JAVA PROGRAM
 echo "jgolf.sh: Finished compiling the Java code"
-echo "There may have been errors above ^"
+echo "jgolf.sh: There may have been errors above ^"
 sleep 1
 echo ""
 echo "jgolf.sh: Executing JGolf program..."
