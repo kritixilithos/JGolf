@@ -4,14 +4,14 @@ import java.util.regex.Pattern;
 import java.lang.Exception;
 
 /**
-	* NOTES: input is accepted through args:
-	*  a = args        A = length(1)
-	*  r = int(0)      R = double(0.0)
-	*  g = char(' ')   G = char array(null)
-	*  s = string("")  S = args as string(" ")
-	*  r,R,G,s are all for args[0] where g is the first character in args[0]
-	*  Parenthesis indicate the default initialised value of the variables
-	*/
+ * NOTES: input is accepted through args:
+ *  a = args        A = length(1)
+ *  r = int(0)      R = double(0.0)
+ *  g = char(' ')   G = char array(null)
+ *  s = string("")  S = args as string(" ")
+ *  r,R,G,s are all for args[0] where g is the first character in args[0]
+ *  Parenthesis indicate the default initialised value of the variables
+ */
 
 public class compile {
 	public static void main(String[] args) {
@@ -71,9 +71,15 @@ public class compile {
 			String statement = statements[i];
 
 			//Pattern for for-loop f(var, start, end, increment){
-			Pattern Pfor = Pattern.compile("f\\(([a-zA-Z]),([\\d]+),([\\d]+),([\\d]+)\\)\\{");
+			Pattern Pfor = Pattern.compile("f\\(([a-zA-Z]),([-]?[\\d]+),([-]?[\\d]+),([-]?[\\d]+)\\)\\{");//with support for negative numbers
 			Matcher Mfor = Pfor.matcher(statement);
-			statement = Mfor.replaceAll("for(int $1 = $2; $1 <= $3; $1 += $4){");
+			if(Mfor.find()) {
+				if(Integer.parseInt(Mfor.group(2)) > Integer.parseInt(Mfor.group(3))) {
+					statement = Mfor.replaceAll("for(int $1 = $2; $1 >= $3; $1 += $4){");
+				}else{
+					statement = Mfor.replaceAll("for(int $1 = $2; $1 <= $3; $1 += $4){");
+				}
+			}
 
 			//Replace "P(" with System.out.println(
 			Pattern Pprint = Pattern.compile("([Pp])([\\|\\(])");//Compiling printLine regex
@@ -119,5 +125,5 @@ public class compile {
 		}
 
 		System.out.println("compile.java: Finished writing "+filename+".java");
+		}
 	}
-}
