@@ -69,6 +69,12 @@ public class compile {
 		//iterator through all the statements
 		for(int i = 0; i < statements.length; i++) {
 			String statement = statements[i];
+
+			//Pattern for for-loop f(var, start, end, increment){
+			Pattern Pfor = Pattern.compile("f\\(([a-zA-Z]),([\\d]+),([\\d]+),([\\d]+)\\)\\{");
+			Matcher Mfor = Pfor.matcher(statement);
+			statement = Mfor.replaceAll("for(int $1 = $2; $1 <= $3; $1 += $4){");
+
 			//Replace "P(" with System.out.println(
 			Pattern Pprint = Pattern.compile("([Pp])([\\|\\(])");//Compiling printLine regex
 			Matcher Mprint = Pprint.matcher(statement);//getting matcher obj for ^
@@ -80,7 +86,7 @@ public class compile {
 				if(Mprint.group(2).equals("|")) {
 					statement = Mprint.replaceAll(javaPrint + "(|");//replacing for [Pp]|...
 				}else if(Mprint.group(2).equals("(")) {
-					statement = Mprint.replaceAll(javaPrint + "(");//replacing for [Pp](...
+					statement = Mprint.replaceAll(javaPrint + "(");//replacing for [Pp](..
 				}
 			}
 			Pattern Pstringify = Pattern.compile("\\|([^\\|]*)\\|");//finding strings in |asdasd| format
@@ -98,7 +104,12 @@ public class compile {
 			writer.println(verbose);//clutter
 			writer.println(argDeclare);//arg variables
 			for(String statement:statements) {//iterates through the statements
-				if(statement!=null) writer.println(statement+";");
+				if(statement!=null) {
+					if(statement.charAt(statement.length()-1) == '}')
+						writer.println(statement);
+					else
+						writer.println(statement+";");
+				}
 			}
 			//writer.println(code);//code, TODO: add syntax changes
 			writer.println(ending);//ending brackets
