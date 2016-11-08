@@ -70,8 +70,29 @@ public class compile {
 		for(int i = 0; i < statements.length; i++) {
 			String statement = statements[i];
 
+			//regex for functions and methods with return/void type
+			Pattern Pmethod = Pattern.compile("([iScdf])([a-zA-Z])\\(([^(]*)\\)\\{");
+			Matcher Mmethod = Pmethod.matcher(statement);
+			if(Mmethod.find()) {
+				statement = Mmethod.replaceAll(returnType(Mmethod.group(1))+" $2($3){");
+			}
+
+			//regex for if/else if statements
+			Pattern Pelif = Pattern.compile("(e?)F\\(");
+			Matcher Melif = Pelif.matcher(statement);
+			if(Melif.find()) {
+				if(Melif.group(1).equals("e"))
+					statement = Melif.replaceAll("else if(");
+				else
+					statement = Melif.replaceAll("if(");
+			}
+
+			Pattern Pelse = Pattern.compile("\\}e\\{");
+			Matcher Melse = Pelse.matcher(statement);
+			statement = Melse.replaceAll("}else{");
+
 			//Pattern for for-loop f(var, start, end, increment){
-			Pattern Pfor = Pattern.compile("f\\(([a-zA-Z]),([-]?[\\d]+),([-]?[\\d]+),([-]?[\\d]+)\\)\\{");//with support for negative numbers
+			Pattern Pfor = Pattern.compile("f\\(([a-zA-Z]),([-]?[\\d]+),([-]?[\\d]+),([-]?[\\d]+)\\)");//with support for negative numbers
 			Matcher Mfor = Pfor.matcher(statement);
 			if(Mfor.find()) {
 				if(Integer.parseInt(Mfor.group(2)) > Integer.parseInt(Mfor.group(3))) {
@@ -80,7 +101,7 @@ public class compile {
 					statement = Mfor.replaceAll("for(int $1 = $2; $1 <= $3; $1 += $4){");
 				}
 			}
-
+			//System.out.println(statement);
 			//Replace "P(" with System.out.println(
 			Pattern Pprint = Pattern.compile("([Pp])([\\|\\(])");//Compiling printLine regex
 			Matcher Mprint = Pprint.matcher(statement);//getting matcher obj for ^
@@ -89,15 +110,15 @@ public class compile {
 				if(Mprint.group(1).equals("P")) {//checking if it is P[\(\|] or p[\(\|]
 					javaPrint = "System.out.println";
 				}
-				if(Mprint.group(2).equals("|")) {
+				/*if(Mprint.group(2).equals("|")) {
 					statement = Mprint.replaceAll(javaPrint + "(|");//replacing for [Pp]|...
-				}else if(Mprint.group(2).equals("(")) {
+				}else*/ if(Mprint.group(2).equals("(")) {
 					statement = Mprint.replaceAll(javaPrint + "(");//replacing for [Pp](..
 				}
-			}
+			}/*
 			Pattern Pstringify = Pattern.compile("\\|([^\\|]*)\\|");//finding strings in |asdasd| format
 			Matcher Mstringify = Pstringify.matcher(statement);//getting matcher for ^
-			statement = Mstringify.replaceAll("\"$1\")");//replacing for ^^
+			statement = Mstringify.replaceAll("\"$1\")");//replacing for ^^*/
 
 			statements[i] = statement;//Adding the changes to statements
 		}
@@ -125,5 +146,25 @@ public class compile {
 		}
 
 		System.out.println("compile.java: Finished writing "+filename+".java");
+
+		}
+
+		static String returnType(String s) {
+			switch(s) {
+				case "i":
+					return "int";
+				case "S":
+					return "String";
+				case "c":
+					return "char";
+				case "d":
+					return "double";
+				case "f":
+					return "float";
+				case "v":
+					return "void";
+				default:
+					return "";
+			}
 		}
 	}
