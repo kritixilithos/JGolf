@@ -3,7 +3,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.lang.Exception;
 
-/**
+/** 
  * NOTES: input is accepted through args:
  *  a = args        A = length(1)
  *  r = int(0)      R = double(0.0)
